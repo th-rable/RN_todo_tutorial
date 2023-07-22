@@ -15,6 +15,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ScrollView,
 } from 'react-native';
 import Task from './src/js/Task';
 
@@ -47,13 +48,14 @@ export default function App() {
       
       <View style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>
-          Today's tasks
+          Todo List
         </Text>
+        <ScrollView style={styles.scrollView}>
         <View style={styles.items}>
           {
             taskItems.map((item,index)=>{
               return(
-                <TouchableOpacity key={index} onPress={()=>completeTask()}>
+                <TouchableOpacity key={index} onPress={()=>completeTask(index)}>
                     <Task text={item}></Task>
                 </TouchableOpacity>
               )
@@ -62,18 +64,21 @@ export default function App() {
           }
           
         </View>
-      </View>
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === 'ios' ? 'padding':'height'}
-        style={styles.writeTaskWrapper}>
-        <TextInput style={styles.input} placeholder={'write a task'} value={task} onChangeText={text=>setTask(text)}></TextInput>
-        <TouchableOpacity onPress={()=>handleAddTask()}>
-          <View style={styles.addWrapper}>
-            <Text style={styles.addText}>+</Text>
-          </View>
-        </TouchableOpacity>
+        
+        </ScrollView>
+        </View>
+        <KeyboardAvoidingView 
+          behavior={Platform.OS === 'ios' ? 'padding':'height'}
+          style={styles.writeTaskWrapper}>
+          <TextInput style={styles.input} placeholder={'write a task'} value={task} onChangeText={text=>setTask(text)}></TextInput>
+          <TouchableOpacity onPress={()=>handleAddTask()}>
+            <View style={styles.addWrapper}>
+              <Text style={styles.addText}>+</Text>
+            </View>
+          </TouchableOpacity>
 
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      
     </View>
   );
 }
@@ -86,6 +91,7 @@ const styles = StyleSheet.create({
   tasksWrapper:{
     paddingTop:80,
     paddingHorizontal:20,
+    paddingBottom:130,
   },
   sectionTitle:{
     fontSize:24,
@@ -93,11 +99,12 @@ const styles = StyleSheet.create({
     color:'black'
   },
   items:{
-    marginTop:30,
+    //marginBottom:30,
   },
   writeTaskWrapper:{
     position:'absolute',
-    bottom:60,
+    //position:'relative',
+    bottom:20,
     width:'100%',
     flexDirection:'row',
     justifyContent:'space-around',
@@ -126,6 +133,10 @@ const styles = StyleSheet.create({
   },
   addText:{
 
+  },
+  scrollView:{
+    marginTop:20,
+    
   }
 
   
